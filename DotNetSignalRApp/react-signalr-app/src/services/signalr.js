@@ -5,18 +5,26 @@ class SignalRService {
     this.connection = null;
   }
 
-  async startConnection() {
+  async startConnection(accessToken) {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_SIGNALR_URL || 'http://localhost:5062'}/dashboardHub`)
+      .withUrl(`${process.env.REACT_APP_SIGNALR_URL || 'http://localhost:5062'}/dashboardHub`, {
+        accessTokenFactory: () => accessToken
+      })
       .withAutomaticReconnect()
       .build();
 
     try {
       await this.connection.start();
-      console.log('SignalR Connected');
+      console.log('SignalR Connected with authentication');
+      
+      // Join user groups based on authentication
+      await this.connection.invoke('JoinUserGroup');
     } catch (err) {
       console.error('SignalR Connection Error: ', err);
-      setTimeout(() => this.startConnection(), 5000);
+      if (err.message.includes('401')) {
+        console.warn('SignalR authentication failed - token may be expired');
+      }
+      setTimeout(() => this.startConnection(accessToken), 5000);
     }
   }
 

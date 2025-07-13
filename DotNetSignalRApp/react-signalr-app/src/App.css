@@ -15,6 +15,12 @@
   align-items: center;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .App-header h1 {
   margin: 0;
   font-size: 24px;
@@ -283,5 +289,234 @@ button[type="button"]:hover {
   
   .chart-wrapper {
     height: 300px;
+  }
+}
+
+/* Authentication Styles */
+.login-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.features {
+  text-align: left;
+  margin: 30px 0;
+}
+
+.features ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.features li {
+  padding: 8px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.features li:before {
+  content: "✓";
+  color: #4caf50;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.login-button {
+  background-color: #0078d4;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.login-button:hover {
+  background-color: #106ebe;
+}
+
+/* User Profile Styles */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 25px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-email {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.user-org {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.external-badge {
+  background-color: #ff9800;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.user-permissions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.roles {
+  display: flex;
+  gap: 5px;
+}
+
+.role-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.role-administrator {
+  background-color: #f44336;
+  color: white;
+}
+
+.role-editor {
+  background-color: #2196f3;
+  color: white;
+}
+
+.role-viewer {
+  background-color: #4caf50;
+  color: white;
+}
+
+.role-partner {
+  background-color: #ff9800;
+  color: white;
+}
+
+.logout-button {
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Permissions Info */
+.permissions-info {
+  background-color: #f0f7ff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.permission-badge {
+  background-color: #2196f3;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.permission-note {
+  color: #666;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Role-based Table Styles */
+.low-stock {
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: bold;
+}
+
+.edit-button {
+  background-color: #2196f3;
+  color: white;
+  margin-right: 5px;
+}
+
+.edit-button:hover {
+  background-color: #1976d2;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+@media (max-width: 768px) {
+  .user-profile {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-right {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .permissions-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }

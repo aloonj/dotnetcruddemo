@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemList = ({ items, onEdit, onDelete }) => {
+const ItemList = ({ items, onEdit, onDelete, canEdit = false, canDelete = false }) => {
   return (
     <div className="item-list">
       <h2>Items</h2>
@@ -12,7 +12,7 @@ const ItemList = ({ items, onEdit, onDelete }) => {
             <th>Description</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Actions</th>
+            {(canEdit || canDelete) && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -22,11 +22,21 @@ const ItemList = ({ items, onEdit, onDelete }) => {
               <td>{item.name}</td>
               <td>{item.description}</td>
               <td>${item.price.toFixed(2)}</td>
-              <td>{item.quantity}</td>
-              <td>
-                <button onClick={() => onEdit(item)}>Edit</button>
-                <button onClick={() => onDelete(item.id)}>Delete</button>
-              </td>
+              <td className={item.quantity < 10 ? 'low-stock' : ''}>{item.quantity}</td>
+              {(canEdit || canDelete) && (
+                <td>
+                  {canEdit && (
+                    <button onClick={() => onEdit(item)} className="edit-button">
+                      Edit
+                    </button>
+                  )}
+                  {canDelete && (
+                    <button onClick={() => onDelete(item.id)} className="delete-button">
+                      Delete
+                    </button>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
