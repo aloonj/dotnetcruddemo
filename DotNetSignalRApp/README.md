@@ -125,6 +125,31 @@ The application uses SignalR for real-time communication:
   - `ReceiveItemDeleted` - Fired when an item is deleted
   - `ReceiveDashboardData` - Fired every 2 seconds with updated dashboard statistics
 
+## Deployment Options
+
+### Local Development
+Follow the "Getting Started" section above for local development.
+
+### Docker Compose
+Run the entire application with Docker:
+```bash
+docker-compose up --build
+```
+- Frontend: http://localhost:3000
+- API: http://localhost:5062
+
+### Kubernetes
+Deploy to a Kubernetes cluster:
+```bash
+# Build images
+./build-images.sh
+
+# Deploy to Kubernetes
+./deploy.sh
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed Kubernetes deployment instructions.
+
 ## Architecture
 
 - **Backend Service**: `DashboardService` runs as a background service, sending dashboard updates every 2 seconds
@@ -132,6 +157,8 @@ The application uses SignalR for real-time communication:
 - **API Controller**: `ItemsController` handles CRUD operations and triggers SignalR notifications
 - **React Components**: 
   - `App.js` - Main component managing state and SignalR connection
-  - `Dashboard.js` - Displays real-time statistics
+  - `Dashboard.js` - Displays real-time statistics and charts
   - `ItemList.js` - Shows all items in a table
   - `ItemForm.js` - Handles item creation and editing
+  - `LiveInventoryChart.js` - Real-time line chart for inventory value
+  - `StockLevelsChart.js` - Color-coded bar chart for stock levels

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  signalr-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5062:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - signalr-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/swagger/index.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  signalr-frontend:
+    build:
+      context: ./react-signalr-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5062/api
+      - REACT_APP_SIGNALR_URL=http://localhost:5062
+    networks:
+      - signalr-network
+    depends_on:
+      signalr-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  signalr-network:
+    driver: bridge
+
+volumes:
+  # Add volumes if needed for persistent data
+  app-data:

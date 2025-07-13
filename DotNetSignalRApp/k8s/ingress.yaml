@@ -1,0 +1,106 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: signalr-app-ingress
+  labels:
+    app: signalr-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # Enable WebSocket support for SignalR
+    nginx.ingress.kubernetes.io/proxy-set-header: "Connection keep-alive"
+    nginx.ingress.kubernetes.io/websocket-services: "signalr-api-service"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: signalr-demo.local  # Change this to your domain
+    http:
+      paths:
+      # Frontend routes
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-frontend-service
+            port:
+              number: 80
+      # API routes
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
+      # SignalR Hub
+      - path: /dashboardHub
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
+      # Swagger UI
+      - path: /swagger
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
+---
+# Alternative Ingress with TLS support
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: signalr-app-ingress-tls
+  labels:
+    app: signalr-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-set-header: "Connection keep-alive"
+    nginx.ingress.kubernetes.io/websocket-services: "signalr-api-service"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # If using cert-manager
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - signalr-demo.yourdomain.com
+    secretName: signalr-app-tls
+  rules:
+  - host: signalr-demo.yourdomain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-frontend-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
+      - path: /dashboardHub
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
+      - path: /swagger
+        pathType: Prefix
+        backend:
+          service:
+            name: signalr-api-service
+            port:
+              number: 80
