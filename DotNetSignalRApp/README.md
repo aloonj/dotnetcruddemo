@@ -16,6 +16,28 @@ This application demonstrates a real-time dashboard with CRUD operations using .
 - **Backend**: .NET 8 Web API, SignalR, Entity Framework Core (InMemory)
 - **Frontend**: React, SignalR Client, Axios, Chart.js
 
+## Project Structure
+
+```
+DotNetSignalRApp/
+├── Controllers/          # API Controllers
+├── Data/                # Entity Framework DbContext
+├── Hubs/                # SignalR Hubs
+├── Models/              # Data Models
+├── Services/            # Background Services
+├── Program.cs           # Application entry point
+└── README.md
+
+react-signalr-app/
+├── src/
+│   ├── components/      # React Components
+│   ├── services/        # API and SignalR services
+│   ├── App.js          # Main Application Component
+│   └── App.css         # Styling
+├── public/             # Static assets
+└── package.json        # Node.js dependencies
+```
+
 ## Getting Started
 
 ### Prerequisites
@@ -27,7 +49,7 @@ This application demonstrates a real-time dashboard with CRUD operations using .
 
 1. Navigate to the project directory:
    ```bash
-   cd /home/ajames/dotnetapp/DotNetSignalRApp
+   cd DotNetSignalRApp
    ```
 
 2. Run the .NET API:
@@ -46,14 +68,19 @@ This application demonstrates a real-time dashboard with CRUD operations using .
 
 1. In a new terminal, navigate to the React app:
    ```bash
-   cd /home/ajames/dotnetapp/DotNetSignalRApp/react-signalr-app
+   cd react-signalr-app
    ```
 
-2. Update the API URLs in the following files if your API is running on a different port:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Update the API URLs in the following files if your API is running on a different port:
    - `src/services/api.js` - Update `API_BASE_URL`
    - `src/services/signalr.js` - Update the SignalR hub URL
 
-3. Start the React development server:
+4. Start the React development server:
    ```bash
    npm start
    ```
